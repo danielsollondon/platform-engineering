@@ -1,0 +1,37 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: frontendapps.compute.example.com
+spec:
+  group: compute.example.com
+  names:
+    kind: FrontEndApp
+    plural: frontendapps
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              location:
+                type: string
+                oneOf:
+                  - pattern: '^EU$'
+                  - pattern: '^US$'
+              appName:
+                type: string
+              repoUrl:
+                type: string
+              repoPath:
+                type: string
+            required:
+              - location
+
+    served: true
+    referenceable: true
+  claimNames:
+    kind: FrontEndAppClaim
+    plural: frontendappclaims
