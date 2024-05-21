@@ -28,9 +28,9 @@ spec:
   appName: testfront02
 ```
 
-The full composition example in the //build demo will be shared end ETA - end of May.
+The full composition example and "how-to" in the //build demo will be shared end ETA - end of May.
 
 
 
 
->NOTE Demos are functional examples and not necessarily best practice!
+>NOTE Demos are functional examples and not production ready and not necessarily best practice!
