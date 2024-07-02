@@ -1,0 +1,76 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-azure-containerservice
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure-containerservice:v1.0.1
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-azure-containerregistry
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure-containerregistry:v1.0.1
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-azure-network
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure-network:v1.0.1
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-azure-compute
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure-compute:v1.0.1
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-azure-storage
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure-storage:v1.0.1
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-helm
+spec:
+  package: xpkg.upbound.io/crossplane-contrib/provider-helm:v0.18.0
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-azure-managedidentity
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure-managedidentity:v1.1.0
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-azure
+spec:
+  package: xpkg.upbound.io/crossplane-contrib/provider-azure:v0.20.1
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-azure-keyvault
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure-keyvault:v1.1.0
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-azure-authorization
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure-authorization:v1.1.0
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-kubernetes
+spec:
+  package: xpkg.upbound.io/crossplane-contrib/provider-kubernetes:v0.13.0
