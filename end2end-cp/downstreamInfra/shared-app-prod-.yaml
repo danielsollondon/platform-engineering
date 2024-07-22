@@ -1,0 +1,39 @@
+apiVersion: azure.upbound.io/v1beta1
+kind: ResourceGroup
+metadata:
+  name: test-clu-grp01
+spec:
+  forProvider:
+    location: West US3
+    tags:
+      provisioner: crossplane
+---
+apiVersion: containerservice.azure.upbound.io/v1beta1
+kind: KubernetesCluster
+metadata:
+  labels:
+    testing.upbound.io/example-name: test-clu1
+  name: test-clu1
+spec:
+  forProvider:
+    defaultNodePool:
+      - name: default
+        vmSize: Standard_D4s_v4
+        enableAutoScaling: true
+        maxCount: 5
+        minCount: 1
+    dnsPrefix: test-clu1
+    identity:
+      - type: SystemAssigned
+    oidcIssuerEnabled: true
+    workloadIdentityEnabled: true
+    keyVaultSecretsProvider:
+      - secretRotationEnabled: true
+    nodeOsChannelUpgrade: SecurityPatch
+    location: East US 2
+    azurePolicyEnabled: true
+    resourceGroupName: test-clu-grp01
+    tags:
+      Environment: Production
+      Location: Seattle
+      Owner: piere
