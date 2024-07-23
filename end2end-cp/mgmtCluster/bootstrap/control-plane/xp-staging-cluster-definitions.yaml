@@ -1,12 +1,12 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
-  name: org1StagingAks.compute.example.com
+  name: staging-aks.compute.example.com
 spec:
   group: compute.example.com
   names:
-    kind: stagingAksCluster
-    plural: stagingAksClusters
+    kind: staging-aks
+    plural: staging-aks
   versions:
   - name: v1alpha1
     schema:
@@ -32,5 +32,5 @@ spec:
     served: true
     referenceable: true
   claimNames:
-    kind: stagingAksClusterClaim
-    plural: stagingAksClusterClaims
+    kind: staging-aks-claim
+    plural: staging-aks-claims
