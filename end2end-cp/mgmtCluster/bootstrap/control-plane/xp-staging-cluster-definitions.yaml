@@ -18,17 +18,17 @@ spec:
             properties:
               location:
                 type: string
-              clusterName:
+                oneOf:
+                  - pattern: '^EU$'
+                  - pattern: '^US$'
+              clustername:
                 type: string
-              rgName:
-                type: string
-              teamName:
+              teamname:
                 type: string
             required:
               - location
-              - clusterName
-              - rgName
-              - teamName
+              - clustername
+              - teamname
     served: true
     referenceable: true
   claimNames:
