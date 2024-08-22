@@ -1,0 +1,40 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: staging-aks.compute.example.com
+spec:
+  group: compute.example.com
+  names:
+    kind: staging-aks
+    plural: staging-aks
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              location:
+                type: string
+                oneOf:
+                  - pattern: '^EU$'
+                  - pattern: '^US$'
+              clustername:
+                type: string
+              teamname:
+                type: string
+              repourl:
+                type: string
+              repopath:
+                type: string
+            required:
+              - location
+              - clustername
+              - teamname
+    served: true
+    referenceable: true
+  claimNames:
+    kind: staging-aks-claim
+    plural: staging-aks-claims

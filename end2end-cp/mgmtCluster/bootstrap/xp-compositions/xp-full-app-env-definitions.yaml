@@ -1,0 +1,39 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: base-stateful-app.compute.example.com
+spec:
+  group: compute.example.com
+  names:
+    kind: base-stateful-app
+    plural: base-stateful-app
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              clustername:
+                type: string
+              appname:
+                type: string
+              repourl:
+                type: string
+              repopath:
+                type: string
+              location:
+                type: string
+                oneOf:
+                  - pattern: '^EU$'
+                  - pattern: '^US$'
+            required:
+              - location
+
+    served: true
+    referenceable: true
+  claimNames:
+    kind: base-stateful-app-claim
+    plural: base-stateful-app-claims

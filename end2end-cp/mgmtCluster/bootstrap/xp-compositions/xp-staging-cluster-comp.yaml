@@ -1,0 +1,257 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: staging-aks
+spec:
+  resources:
+    - name: staging-resourcegroup
+      base:
+        apiVersion: azure.upbound.io/v1beta1
+        kind: ResourceGroup
+        spec:
+          forProvider:
+            location: Central US
+      patches:
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.location"
+          toFieldPath: "spec.forProvider.location"
+          transforms:
+            - type: map
+              map: 
+                EU: "Sweden Central"
+                US: "Central US"
+
+    - name: staging-aks-cluster
+      base:
+        apiVersion: containerservice.azure.upbound.io/v1beta1
+        kind: KubernetesCluster
+        metadata:
+          name: test-clu1
+        spec:
+          forProvider:
+            defaultNodePool:
+              - name: default
+                vmSize: Standard_DS2_v2
+                enableAutoScaling: true
+                maxCount: 2
+                minCount: 1
+            dnsPrefix: test-clu1
+            identity:
+              - type: SystemAssigned
+            oidcIssuerEnabled: true
+            workloadIdentityEnabled: true
+            keyVaultSecretsProvider:
+              - secretRotationEnabled: true
+            nodeOsChannelUpgrade: SecurityPatch
+            location: Central US
+            azurePolicyEnabled: true
+            resourceGroupNameSelector:
+              matchControllerRef: true
+            tags:
+              Environment: Production
+              Location: Seattle
+              Owner: piere
+          writeConnectionSecretToRef:
+            name: test-clu1-secret
+            namespace: upbound-system
+      patches:
+
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.clustername"
+          toFieldPath: "metadata.name"
+
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.location"
+          toFieldPath: "spec.forProvider.location"
+          transforms:
+            - type: map
+              map: 
+                EU: "Sweden Central"
+                US: "Central US"
+
+        - type: CombineFromComposite
+          combine:
+            variables:
+              - fromFieldPath: spec.clustername
+            strategy: string
+            string:
+              fmt: "%s-secret"
+          toFieldPath: "spec.writeConnectionSecretToRef.name"
+          policy:
+          fromFieldPath: Required
+
+        - type: CombineFromComposite
+          combine:
+            variables:
+              - fromFieldPath: spec.clustername
+            strategy: string
+            string:
+              fmt: "%s-dns"
+          toFieldPath: "spec.forProvider.dnsPrefix"
+          policy:
+          fromFieldPath: Required
+
+    - name: prov-config-helm
+      base:
+        apiVersion: helm.crossplane.io/v1beta1
+        kind: ProviderConfig
+        metadata:
+          name: clu-prov-name
+          namespace: upbound-system
+        spec:
+          credentials:
+            source: Secret
+            secretRef:
+              name: clu-secret
+              namespace: upbound-system
+              key: kubeconfig
+      patches:
+        - type: CombineFromComposite
+          combine:
+            variables:
+              - fromFieldPath: spec.clustername
+            strategy: string
+            string:
+              fmt: "%s-secret"
+          toFieldPath: "spec.credentials.secretRef.name"
+          policy:
+          fromFieldPath: Required
+
+        - type: CombineFromComposite
+          combine:
+            variables:
+              - fromFieldPath: spec.clustername
+            strategy: string
+            string:
+              fmt: "%s-prov-conf-helm"
+          toFieldPath: "metadata.name"
+          policy:
+          fromFieldPath: Required
+      readinessChecks:
+      - type: None
+
+
+    - name: argo-install
+      base:
+        apiVersion: helm.crossplane.io/v1beta1
+        kind: Release
+        metadata:
+          annotations: 
+              crossplane.io/external-name: argocd   
+          name: sh01-eus2-02-argo  
+        spec:
+          forProvider:
+            chart:
+              name: argo-cd
+              repository: https://argoproj.github.io/argo-helm
+              version:  7.4.1
+            namespace: argocd   
+          providerConfigRef: 
+            name: clu-provider
+            namespace: upbound-system
+      patches:
+        - type: CombineFromComposite
+          combine:
+            variables:
+              - fromFieldPath: spec.clustername
+            strategy: string
+            string:
+              fmt: "%s-prov-conf-helm"
+          toFieldPath: "spec.providerConfigRef.name"
+
+    - name: prov-config-object
+      base:
+        apiVersion: kubernetes.crossplane.io/v1alpha1
+        kind: ProviderConfig
+        metadata:
+          name: clu-prov-name
+          namespace: upbound-system
+        spec:
+          credentials:
+            source: Secret
+            secretRef:
+              name: clu-secret
+              namespace: upbound-system
+              key: kubeconfig
+      patches:
+        - type: CombineFromComposite
+          combine:
+            variables:
+              - fromFieldPath: spec.clustername
+            strategy: string
+            string:
+              fmt: "%s-secret"
+          toFieldPath: "spec.credentials.secretRef.name"
+          policy:
+          fromFieldPath: Required
+
+        - type: CombineFromComposite
+          combine:
+            variables:
+              - fromFieldPath: spec.clustername
+            strategy: string
+            string:
+              fmt: "%s-prov-conf-object"
+          toFieldPath: "metadata.name"
+          policy:
+          fromFieldPath: Required
+      readinessChecks:
+      - type: None
+
+    - name: add-core-it-config
+      base:
+        apiVersion: kubernetes.crossplane.io/v1alpha2
+        kind: Object
+        metadata:
+          name: core-cluster-configs
+        spec:
+          forProvider:
+            manifest:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Application
+              metadata:
+                name: core-cluster-configs
+                namespace: argocd
+              spec:
+                project: default
+                source:    
+                  repoURL: repoUrl
+                  targetRevision: HEAD
+                  path: repoPath
+                syncPolicy:
+                    automated: {}
+                destination:
+                    namespace: argocd
+                    server: https://kubernetes.default.svc
+          providerConfigRef: 
+            name: clu-provider
+      patches:        
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.repourl"
+          toFieldPath: "spec.forProvider.manifest.spec.source.repoURL"
+        
+        - type: FromCompositeFieldPath
+          fromFieldPath: "spec.repopath"
+          toFieldPath: "spec.forProvider.manifest.spec.source.path"
+        
+        - type: CombineFromComposite
+          combine:
+            variables:
+              - fromFieldPath: spec.clustername
+            strategy: string
+            string:
+              fmt: "%s-prov-conf-object"
+          toFieldPath: "spec.providerConfigRef.name"
+
+
+    
+
+  compositeTypeRef:
+    apiVersion: compute.example.com/v1alpha1
+    kind: staging-aks
+    
+
+
+
+
+
