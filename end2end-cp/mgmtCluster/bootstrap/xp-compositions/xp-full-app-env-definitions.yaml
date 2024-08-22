@@ -16,8 +16,6 @@ spec:
           spec:
             type: object
             properties:
-              clustername:
-                type: string
               appname:
                 type: string
               repourl:
