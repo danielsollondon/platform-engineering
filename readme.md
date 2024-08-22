@@ -74,7 +74,6 @@ Lets get building.....
 
 ## Part 1: Create, Configure Mgmt Cluster, Repo, Tools and Deploy Infra
 
-
 ### Tooling & purpose
 * Cloud native IaC tool - this tool will enable the LCM of infra resources across any clouds you chose, for this example we are going to show Crossplane.
 * GitOps - this tool will reconcile the infra configuration in a repositry with the management cluster and ensure the configuration is applied. We will use Argo in the example, but you can use other tools.

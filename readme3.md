@@ -7,7 +7,7 @@
 
 
 
-A cloud native app is made up of more than just a namespace and an Argo Application, you may also need an Identity, access to a secret store, database, observability etc. 
+A cloud native app is made up of more than just a namespace and an Argo Application, you may also need an Identity, access to a secret store, database, observability etc. For those of you who watched or attended [Platform Engineering: Creating Scalable and Resilient Systems](https://build.microsoft.com/en-US/sessions/05883e89-2458-4a3b-94a8-c4472d6e8a2a?source=sessions) at //Build in 2024, this was the demo presented, although a little more enhanced now!
 
 In this part of the demo we will use Crossplane to deploy an application to an existing AKS cluster:
 
