@@ -211,6 +211,7 @@ EOF
 5. Deploying Resources & Providers
 
 The core Azure provider only support a ~6 Kinds which link to specific Azure operations or resouces, you can see these by going to ['Config' tab](https://marketplace.upbound.io/providers/upbound/provider-family-azure/v1.3.0/config), one of them is 'Resource Group':
+
 ![alt text](imgs/image.png)
 Now if you want to create a ResourceGroup, click on it, and this will show you the API documentation, what can be set, then the 'Example' tab shows an example. To test if the Crossplane installation has been successful run:
 
