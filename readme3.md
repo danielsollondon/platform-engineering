@@ -1,4 +1,4 @@
-# Platform Engineering Concepts with Azure Part 3 (DRAFT)
+# Cloud Native Platform Engineering Concepts with Azure Part 3 (DRAFT)
 
 ## Deploy a cloud native app with a full app environment in Azure
 A cloud native app is made up of more than just a namespace and an Argo Application, you may also need an Identity, access to a secret store, database, observability etc. 
