@@ -1,5 +1,10 @@
 # Cloud Native Platform Engineering Concepts with Azure  (DRAFT)
 
+* Part of a 3 part series:
+  * [Part 1: Create, Configure Mgmt Cluster, Repo, Tools and Deploy Infra](readme.md)
+  * Part 2: Deploy Preconfigured, Standardized Solutions in Azure
+  * [Part 3: Deploy a Cloud Native App with a Full App Environment in Azure](readme3.md)
+
 ## Part 2: Deploy Preconfigured, Standardized Solutions in Azure
 In Terraform you have [TF modules](https://developer.hashicorp.com/terraform/language/modules) that can simplify deploying multiple resources in a sequence, integrate them etc. In Crossplane you have composite resource that represents one or more resource, but they different because they are represented as a K8s resource.
 

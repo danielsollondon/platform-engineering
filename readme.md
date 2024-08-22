@@ -7,8 +7,8 @@
 * Tools
 * Examples
   * Part 1: Create, Configure Mgmt Cluster, Repo, Tools and Deploy Infra
-  * Part 2: Deploy Preconfigured, Standardized Solutions in Azure
-  * Part 3: Deploy a Cloud Native App with a Full App Environment in Azure
+  * [Part 2: Deploy Preconfigured, Standardized Solutions in Azure](readme2.md)
+  * [Part 3: Deploy a Cloud Native App with a Full App Environment in Azure](readme3.md)
 
 ## Introduction and motivation
 When I started in the platform engineering journey I had familarity with Terraform and pipelines such as GitHub Actions, Azure DevOps and challenged myself to enable some key platform engineering self service scenarios building on some popular cloud native OSS tools on Azure and callout some of learnings.
