@@ -3,10 +3,12 @@
 ## Agenda
 * Intro
 * Goals of document
-    * Familarity of the tools
-    * enable you to progress to a more complete setup, e.g. here: https://github.com/Azure-Samples/aks-platform-engineering
 * Architecture
-* Confguration
+* Tools
+* Examples
+  * Part 1: Create, Configure Mgmt Cluster, Repo, Tools and Deploy Infra
+  * Part 2: Deploy Preconfigured, Standardized Solutions in Azure
+  * Part 3: Deploy a Cloud Native App with a Full App Environment in Azure
 
 ## Introduction and motivation
 When I started in the platform engineering journey I had familarity with Terraform and pipelines such as GitHub Actions, Azure DevOps and challenged myself to enable some key platform engineering self service scenarios building on some popular cloud native OSS tools on Azure and callout some of learnings.
@@ -67,10 +69,11 @@ For this we are are going to use GitOps based CD pipelines, popular tools exampl
 
 We will use [Argo](https://argoproj.github.io) in the example, but you can use other tools, the main benefit of GitOps is scale, configuration portabiltiy, drift detection, automation, auditing and approval etc. A key difference between GitOps and other CD pipelines such as Jenkins, GHA, DevOps is that they are push based pipelines that run outside of the K8s cluster, requiring connectivity details for the K8s cluster. Whereas with GitOps tools have an agent that is installed on the cluster and you add a configuration to the agent, it will then reach out to a configuration repo and 'pull' in the configuration. There is a lot more detail in this area, for more information take a look [here](https://opengitops.dev/) as well as the project content.
 
-## Lets get building
 
-### Architecture of implementation
-<See diagram here>
+Lets get building.....
+
+## Part 1: Create, Configure Mgmt Cluster, Repo, Tools and Deploy Infra
+
 
 ### Tooling & purpose
 * Cloud native IaC tool - this tool will enable the LCM of infra resources across any clouds you chose, for this example we are going to show Crossplane.
@@ -82,8 +85,6 @@ We will use [Argo](https://argoproj.github.io) in the example, but you can use o
     3. Configuration library - configurations available to teams.
 * All of these steps can be automated, but here we are working through a step by step approach to help you understand how the stack works.
 
-
-## Step 1: Create, Configure Mgmt Cluster and Repo
 1. Create a Private GH Repo
 Clone or manually copy this repo to your own private repo and for this example we'll create 3 folders, but you should think about the best structure for your organization, there is also a good example [here](https://github.com/Azure-Samples/aks-platform-engineering).
     * /mgmtCluster/bootstrap/control-plane/addons
