@@ -5,7 +5,7 @@ A cloud native app is made up of more than just a namespace and an Argo Applicat
 
 In this part of the demo we will use Crossplane to deploy an application to an existing AKS cluster:
 
-![alt text](image-8.png)
+![alt text](imgs/image-8.png)
 
 1. Create a project specific resource group, deploy all the resources, setup the permissions for the identity etc as before, put the CosmosDB connection string into key vault, etc.  
 2. Crossplane creates another Argo App config on the Shared App cluster, the apps of apps pattern, this then connects to the developers app repo that contains the templated app helm chart and reconciles CREATING an isolated project NAMESPACE for the team, deploys a container with a workload identity configuration so the container can connect to an Azure Key Vault to get the CosmosDB connection string.
@@ -274,7 +274,7 @@ rm team1-apps.yaml
 ```
 Commit and push to the repo.
 
-## Summary
+## Recap & next steps
 You just simulated creating a preconfigured application environment that configured a shared team AKS cluster with a workload identity, namespace, service account, created these Azure resources Azure Key Vault, Secrets, UAI and then created an Argo App and deployed an application that could connect to the Key Vault without a password and get the secret! At no point did the end user have to know anything about Kubernetes, deployment pipelines or Azure, it was all abstracted away.
 
-As mentioned, this was not a lesson in best practice but to familarize you with how you can use Crossplane and Argo as some building blocks for self service platforms on Azure.
+As mentioned, this was not a lesson in best practice but to familarize you with how you can use Crossplane and Argo as some building blocks for self service platforms on Azure, but now have a look at a fully configured example [here](https://github.com/Azure-Samples/aks-platform-engineering).

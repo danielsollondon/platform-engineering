@@ -275,4 +275,4 @@ For more understanding on Claims, review the Crossplane [docs](https://docs.cros
   * Will not require an understanding of the underlying complexity and options of all the components.  
 * But developers need more than just a K8s cluster and namespace for their applications.
 
-In the next example we will use this as a shared App cluster and deploy a cloud native app with a full app environment in Azure.
+In the next [section](readme3.md) we will use this as a shared App cluster and deploy a cloud native app with a full app environment in Azure.

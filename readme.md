@@ -151,7 +151,7 @@ kubectl get pods -n upbound-system
 ```
 
 Check for the latest version of the [provider for Azure](https://marketplace.upbound.io/providers/upbound/provider-family-azure/v1.3.0)
-![alt text](image-3.png)
+![alt text](imgs/image-3.png)
 ```bash
 # install the Azure provider, note this is the Upbound Official Azure provider, not the community provider!
 cat <<EOF | kubectl apply -f -
@@ -207,7 +207,7 @@ EOF
 5. Deploying Resources & Providers
 
 The core Azure provider only support a ~6 Kinds which link to specific Azure operations or resouces, you can see these by going to ['Config' tab](https://marketplace.upbound.io/providers/upbound/provider-family-azure/v1.3.0/config), one of them is 'Resource Group':
-![alt text](image.png)
+![alt text](imgs/image.png)
 Now if you want to create a ResourceGroup, click on it, and this will show you the API documentation, what can be set, then the 'Example' tab shows an example. To test if the Crossplane installation has been successful run:
 
 ```bash
@@ -240,7 +240,7 @@ kubectl delete ResourceGroup rg-myfirst
 6. Deploying more resources
 
 To be able to deploy and manage more Azure resources you need to install additional providers, go to the 'Providers' tab and you will see more of them, later we'll walk through how to search for specific resources in providers. You will need to install the providers to use them, click on any one and then there will be a link to `Install Manifest`, for example if you want to manage AKS you need the [provider-azure-containerservice](https://marketplace.upbound.io/providers/upbound/provider-azure-containerservice):
-![alt text](image-1.png)
+![alt text](imgs/image-1.png)
 Upon clicking `Install Manifest` you will see this, which you can run now, or setup a full configuration a repositry and reconile with an Argo Application.
 ```yaml
 apiVersion: pkg.crossplane.io/v1
@@ -264,7 +264,7 @@ Ensure you are still using the Kubeconfig context for the management cluster `az
 In a previous step we used the Upbound core Azure provider that allowed management of a few Azure resources, to expand this you need to configure additional Crossplane providers by adding manifests configurations for them. As mentioned, you can do this in a piecemeal approach, however if you have them in a repo, you can use Argo to configure them in the management cluster and utlize the benefits of GitOps.
 
 Anytime you want Argo to connect to a repo and reconcile a repo configuration and apply it, you need to define an Argo Application, you can do this in multiple ways, such as ArgoCD CLI, Helm charts etc. In this documentation we will create the initial management cluster configuration Argo App using ArgoCD so you get a flavour of it, and then we'll add more argo apps using other methods and ultimately we'll end up with this:
-![alt text](image-11.png)
+![alt text](imgs/image-11.png)
 * Crossplane Configuration - for managing Crossplane provider configuration
 * Downstream Infra - Team K8s resources, such as clusters etc.
 * Team Projects - Team application environment configurations.
@@ -290,11 +290,11 @@ In the [/mgmtCluster/bootstrap/control-plane/addons directory](https://github.co
 
 > Note! This was written in July'24, so the versions will likely be outdated, for each package, goto the [Marketplace](https://marketplace.upbound.io) and search for each package:
 
-![alt text](image-9.png)
+![alt text](imgs/image-9.png)
 
 And check each version:
 
-![alt text](image-10.png)
+![alt text](imgs/image-10.png)
 
 **Create an Argo App**
 
@@ -316,7 +316,7 @@ argocd app get crossplane-prov-config
 ```
 
 Or go to the UI: https://localhost:8080/applications
-![alt text](image-4.png)
+![alt text](imgs/image-4.png)
 
 
 3. Create an Argo App for creating and life cycle managing the downstream clusters
@@ -550,11 +550,11 @@ spec:
     * `argocd app get core-cluster-configs` or go to the Argo UI https://localhost:8080
 
 
-## Summary of parts created so far
+## Recap
 You now have a basic automated IaC tooling that will allow you to create Azure resources via GitHub supporting the fundamentals of a self service platform. You can enable this as the starting point for self serving resources, with all the audit and approval controls in place. The examples here are:
   * Single clusters - assuming you create new K8s cluster per team and want to deploy mulitple apps.
   * Not representing a solution - they are deploying only a Resource Group, AKS cluster and Argo App, this will not represent the solution your developers need, nor does it how to use resource properties between resources.
   * Showing unnecessary complexity - you can imagine a solution would be made up of many LoC and hard to consume by a developer who just wants to supply some parameters and get started!
   * Cleanup - once you have finished, delete the contents of `myfirstcluster.yaml` and commit to the main branch.
   
-In the next section we are going to show how you can use Crossplane to deploy preconfigured, standardized solutions in Azure.
+In the next [section](readme2.md) we are going to show how you can use Crossplane to deploy preconfigured, standardized solutions in Azure.
