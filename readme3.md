@@ -213,7 +213,7 @@ repourl="https://github.com/danielsollondon/teaminfra/"
 repopath="infra/shared/k8s-cluster-config/main-infra-002"
 
 
-cat team1-apps.yaml <<EOF
+cat > team1-apps.yaml <<EOF
 apiVersion: compute.example.com/v1alpha1
 kind: base-stateful-app
 metadata:
@@ -253,7 +253,7 @@ kubectl describe base-stateful-app.compute.example.com/$appname2
 kubectl get managed
 
 # get the details for specifc managed resources
-kubectl describe userassignedidentity.managedidentity.azure.upbound.io/team01-ngp68
+kubectl describe FederatedIdentityCredential.managedidentity.azure.upbound.io/baseapp02app-jzm7r
 
 # get events
 kubectl get events

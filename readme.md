@@ -330,12 +330,17 @@ Now you need an app that will be responsible for creating the K8s clusters and t
 
 Create and add this file to this location: https://github.com/danielsollondon/platform-engineering/tree/main/end2end-cp/mgmtCluster/bootstrap/control-plane/projectInfraApp.yaml
 
+
+Note the use of the `finalizer` in the Argo App, this is to ensure that child-apps and all of their resources are deleted when the parent-app is deleted, per the [Argo docs](https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-bootstrapping/#cascading-deletion).
+
 ```yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
     name: downstream-infra
     namespace: argocd
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
     project: default
     source:    
@@ -533,6 +538,8 @@ spec:
       metadata:
         name: core-cluster-configs
         namespace: argocd
+        finalizers:
+        - resources-finalizer.argocd.argoproj.io
       spec:
         project: default
         source:    
