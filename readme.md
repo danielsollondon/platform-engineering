@@ -13,11 +13,11 @@ When I started in the platform engineering journey I had familarity with Terrafo
 
 With the emergence of platform engineering practices and associated cloud native tooling there is a lot to consider, especially if you are not so familar, it feels bewildering when you start, for example, which tools should I evaluate, what do they do, how do I integrate them. You may review really great frameworks that build a lot of the functionality out for you, but if you don't understand how the tools integrate it makes it hard to adopt them and modify them for your own purpose.
 
-This is written for people who are working to achieve a basic platform built on cloud native technology that can deploy infra and apps in a scaleable, standardardized and compliant approach on Azure. It is designed to compliment frameworks, to help you understand how the components work etc.
+This is written for people who are working to achieve a basic platform built on cloud native technology that can deploy infra and apps in a scaleable, standardized and compliant approach on Azure. It is designed to compliment frameworks, to help you understand how the components work etc.
 
 This document is not:
 * An endorsement of any specific tool, we have chosen some popular OSS tools,
-* a best practice guide, it shows examples, there are many opportunities for optimization, you will still need to review specific tool and security guidance.
+* A best practice guide, it shows examples, there are many opportunities for optimization, you will still need to review specific tool and security guidance.
 * Finished - it is a constantly being updated, and relies on people raising issues and PR's to improve it!
 
 
@@ -25,14 +25,14 @@ This document is not:
 By the end of the document you will have:
 * Understanding of:
   * Tools - Have an understanding of some of popular cloud native infrastructure as code tools, and how they compare to existing tools, and tools that enable automation.
-  * Concepts - that are required to create a foundational, scaleable self service experiences.
+  * Concepts - that are required to create a foundational, scaleable self service experiences, e.g. apps of apps pattern etc.
   * How the approach fits into a bigger picture with existing developer flows with build and deploy.
   * Frameworks that build this out for you, e.g. [Azure Platform Engineering Sample](https://github.com/Azure-Samples/aks-platform-engineering
   ).
-* Code samples - that enable self serice experiences that enable:
-  * Deploying dedicated and shared infrastructure. 
-  * Deploy application environments - i.e. all the resources you need to deploy an applicaton
-  * Deploy applicatons
+* Code samples for:
+  * Self service deployment of dedicated and shared infrastructure. 
+  * Self service deployment of application environments - i.e. all the resources you need to deploy an application
+  * Self service deployment of applicatons or configurations on clusters
 * Azure'isms - insights into making them work on Azure.
 
 ## Components
@@ -45,11 +45,11 @@ You will also need a repositry for configurations, we will use GitHub but not co
 ### Infrastructure as Code
 There are multiple IaC choices that are available, for example:
 Cloud Native IaC - these are installed on K8 “management” clusters and cloud resources are represented as custom resources in K8s.
-* [CAPI]() – The cluster API (CAPI) framework and language has 30+ providers (e.g. AWS, GCP, bare metal) enabling IaC in a similar language and common core code base. The cluster api provider for Azure (CAPZ)  allows you to deploy self-managed K8s on Azure and AKS clusters.  
-* [ASO v2]() - Azure Service Operator, you can deploy many Azure resources, not just AKS.  This is also now deployed by default along with and utilized as a dependency by CAPZ.
-* [Crossplane]() - you can deploy resources into multiple clouds, this is the tool we will demonstrate due to it's multicloud capabilties, however you can swap this out for any of the above tools.
+* [CAPI](https://cluster-api.sigs.k8s.io) – The cluster API (CAPI) framework and language has 30+ providers (e.g. AWS, GCP, bare metal) enabling IaC in a similar language and common core code base. The cluster api provider for Azure (CAPZ)  allows you to deploy self-managed K8s on Azure and AKS clusters.  
+* [ASO v2](https://azure.github.io/azure-service-operator/) - Azure Service Operator, you can deploy many Azure resources, not just AKS.  This is also now deployed by default along with and utilized as a dependency by CAPZ.
+* [Crossplane](https://www.crossplane.io) - you can deploy resources into multiple clouds, this is the tool we will demonstrate due to it's multicloud capabilties, however you can swap this out for any of the above tools.
 
-All of these tools require a Kubernetes (K8s) cluster that will host them, typically, at a high level they will install K8s Custom Resource Definitions and then use an identity to connect into Azure to perform infrastructure actions. Cloud infrastructure resources are represented as K8s resources, and track the resource state.
+All of these tools require a Kubernetes (K8s) cluster that will host them, typically, at a high level they will install [K8s Custom Resource Definitions](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions) and then use an identity to connect into Azure to perform infrastructure actions. Cloud infrastructure resources are represented as K8s resources, and track the resource state.
 
 #### What are the key advantages of cloud native IaC?
 * Automation & Drift Detection – Cloud native IaC options can be used with automation such as GitOps tools, this means you can get benefits of GitOps, such as automated resource drift detection out of the box.  Kubernetes works very well as a continuous reconciliation loop versus other non-cloud based IaC options (such as Terraform) that have lock files, state, and drift is only detected on a redeployment of the IaC configuration, leading to delays in detecting drift and reconciliation errors.
@@ -63,16 +63,18 @@ All of these tools require a Kubernetes (K8s) cluster that will host them, typic
 * Existing investments – this document is not suggesting that you should scrap existing investments, you should review how the technincal benefits provide business value and start small. You can perform self-service using existing deployment pipeline technologies such as GitHub Actions, DevOps and IaC tools such as Terraform, Bicep, ARM templates etc.
 
 ### Continuous Deployment (CD) Pipelines
-For this we are are going to use GitOps based CD pipelines, popular tools examples, Argo, Tekton, Flux. this tool will reconcile the infra configuration in a repositry with the management cluster and ensure the configuration is applied. We will use Argo in the example, but you can use other tools, the main benefit of GitOps is scale, configuration portabiltiy, drift detection, automation, auditing and approval etc. A key difference between GitOps and other CD pipelines such as Jenkins, GHA, DevOps is that these are push based pipelines that run outside of the K8s cluster require connectivity details to connect to a K8s cluster and life cycle manage (LCM) an application. Whereas with GitOps tools have an agent that is installed on the cluster and you add a configuration to the agent, it will then reach out to a configuration repo and 'pull' in the configuration. There is a lot more detail in this area, for more information take a look [here](https://opengitops.dev/) as well as the project content.
+For this we are are going to use GitOps based CD pipelines, popular tools examples, Argo, Tekton, Flux. These tools  reconcile the infra or application configuration in a repositry with the K8s cluster.
 
-# Lets get building :-)
+We will use [Argo](https://argoproj.github.io) in the example, but you can use other tools, the main benefit of GitOps is scale, configuration portabiltiy, drift detection, automation, auditing and approval etc. A key difference between GitOps and other CD pipelines such as Jenkins, GHA, DevOps is that they are push based pipelines that run outside of the K8s cluster, requiring connectivity details for the K8s cluster. Whereas with GitOps tools have an agent that is installed on the cluster and you add a configuration to the agent, it will then reach out to a configuration repo and 'pull' in the configuration. There is a lot more detail in this area, for more information take a look [here](https://opengitops.dev/) as well as the project content.
 
-## Architecture of implementation
+## Lets get building
+
+### Architecture of implementation
 <See diagram here>
 
 ### Tooling & purpose
 * Cloud native IaC tool - this tool will enable the LCM of infra resources across any clouds you chose, for this example we are going to show Crossplane.
-* GitOps - this tool will reconcile the infra configuration in a repositry with the management cluster and ensure the configuration is applied. We will use Argo in the example, but you can use other tools, the main benefit of GitOps is scale, configuration portabiltiy, drift detection, automation, auditing and approval etc.
+* GitOps - this tool will reconcile the infra configuration in a repositry with the management cluster and ensure the configuration is applied. We will use Argo in the example, but you can use other tools.
 * Management AKS cluster - this is required for GitOps and IaC tooling, in this example we're going to use a generic AKS cluster.
 * Repo - this is where you will host your configurations for:
     1. The Management cluster configuratation - this configuration will be used by crossplane.
@@ -82,7 +84,6 @@ For this we are are going to use GitOps based CD pipelines, popular tools exampl
 
 
 ## Step 1: Create, Configure Mgmt Cluster and Repo
-## Install Crossplane and Deploy Resources in Azure
 1. Create a Private GH Repo
 Clone or manually copy this repo to your own private repo and for this example we'll create 3 folders, but you should think about the best structure for your organization, there is also a good example [here](https://github.com/Azure-Samples/aks-platform-engineering).
     * /mgmtCluster/bootstrap/control-plane/addons
@@ -92,7 +93,10 @@ Clone or manually copy this repo to your own private repo and for this example w
 2. Management Cluster
 We need a management cluster to install Crossplane on, below is an example using AZ CLI, however you can automate this using Terraform etc.
 
-> NOTE: Before proceeding decide how you wish Crossplane to authenticate with Azure! There are a couple of methods, for example you can use the [System Assigned Managed Identity](https://docs.upbound.io/providers/provider-azure/authentication/#system-assigned-managed-identity) (SAI) of the AKS cluster, or you can use a specific [User Assigned Identity](https://docs.upbound.io/providers/provider-azure/authentication/#user-assigned-managed-identity) (UAI). 
+> NOTE: Before proceeding:
+  * decide how you wish Crossplane to authenticate with Azure! There are a couple of methods, for example you can use the [System Assigned Managed Identity](https://docs.upbound.io/providers/provider-azure/authentication/#system-assigned-managed-identity) (SAI) of the AKS cluster, or you can use a specific [User Assigned Identity](https://docs.upbound.io/providers/provider-azure/authentication/#user-assigned-managed-identity) (UAI). 
+  * Check the Crossplane documentation for the latest install methods.
+
 
 You should evaluate which mode is most appropriate for your security requirements, however if you choose UAI you need to ensure your AKS cluster is configured with it at this step, which we will walk through now.
 
@@ -175,7 +179,7 @@ kubectl describe providers.pkg.crossplane.io provider-azure
 4. Setting up provider permissions to Azure
 Depending on what option you decided in Step #2 you need to ensure that identity has permissions to Azure and what are the scope of those permissions that are required for the job, and meet your corporate security requirements. 
 
-In this example we are going to assume a team has their own Azure subscription and we will grant 'Contributor' permissions to the AKS SAI on the subscription. Note, this is NOT recommended, it is for demonstration purposes. You must be conservative and just grant the identity contributor to a resource group or custom role, however you may find that deployments may require permissions outside of the resource group, or you may even wish to have Crossplane create RG's with RBAC etc.
+In this example we are going to assume a team has thier own Azure subscription and we will grant 'Contributor' permissions to the AKS UAI on the subscription. Note, this is NOT recommended, it is for demonstration purposes. You **must** be conservative and just grant the identity contributor to a resource group or custom role, however you may find that deployments may require permissions outside of the resource group, or you may even wish to have Crossplane create RG's with RBAC etc.
 
 ```bash
 subscriptionID=$(az account show --query id --output tsv)
@@ -404,7 +408,7 @@ spec:
 
 
 > Note! 
-  * As you progress with Crossplane and Azure there will be properties that you want Crossplane to intially set and not to track, for example, extensions, observability configurations, Tags etc, in the same way you can do with `ignore_changes` in Terraform. For more information on how to handle that, see the [Appendix:Properties that you want Crossplane to intially set and not to track]
+  * As you progress with Crossplane and Azure there will be properties that you want Crossplane to intially set and not to track, for example, extensions, observability configurations, Tags etc, in the same way you can do with `ignore_changes` in Terraform. For more information on how to handle that, see the [Appendix:Properties that you want Crossplane to intially set and not to track]().
   * When you review the API documentation, you will see similarities with parameters in CLI and TF, but just be aware there are differences and if you are migrating to Crossplane you will need to check each parameter and how they are are set.
 
 
