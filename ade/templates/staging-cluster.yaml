@@ -1,0 +1,10 @@
+apiVersion: compute.example.com/v1alpha1
+kind: staging-aks
+metadata:
+  name: $name
+spec: 
+  clustername: $clustername
+  teamname: $teamname
+  location: EU
+  repourl: $repourl
+  repopath: $repopath
