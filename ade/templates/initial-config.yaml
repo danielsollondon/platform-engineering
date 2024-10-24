@@ -1,0 +1,21 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: cluster-config
+  labels:
+    name: itops
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-config
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/danielsollondon/projects
+    targetRevision: HEAD
+    path: ./environments
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cluster-config
