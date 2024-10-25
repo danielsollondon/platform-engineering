@@ -10,6 +10,8 @@ kind: Application
 metadata:
   name: cluster-config
   namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -19,3 +21,5 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: cluster-config
+  syncPolicy:
+    automated: {}
