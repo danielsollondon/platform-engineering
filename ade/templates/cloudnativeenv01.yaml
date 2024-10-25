@@ -1,21 +1,25 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: $appname
+  name: cluster-config
   labels:
-    name: $teamname
+    name: itops
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: $appname
+  name: cluster-config
   namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: $repourl
+    repoURL: https://github.com/danielsollondon/projects
     targetRevision: HEAD
-    path: $repopath
+    path: ./environments
   destination:
     server: https://kubernetes.default.svc
-    namespace: $appname
+    namespace: cluster-config
+  syncPolicy:
+    automated: {}
