@@ -1,0 +1,35 @@
+
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: app-name
+  labels:
+    team: teamname
+    az-rgroup: resource-group
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-name
+  namespace: app-name
+spec:
+  project: default
+  source:    
+    repoURL: repourl
+    targetRevision: HEAD
+    path: repopath
+    helm:
+      valuesObject:
+        namespace:
+          name: app-name
+        serviceaccount:
+          clientId: myclientid
+        scrprovclass:
+          keyVaultname: mykeyvaultname
+        scrprovclass:
+          tenantId: mytenantid
+syncPolicy:
+    automated: {}
+destination:
+    namespace: app-name
+    server: https://kubernetes.default.svc
