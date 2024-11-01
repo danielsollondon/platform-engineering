@@ -10,7 +10,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: app-name
-  namespace: app-name
+  namespace: argocd
 spec:
   project: default
   source:    
@@ -25,7 +25,6 @@ spec:
           clientId: myclientid
         scrprovclass:
           keyVaultname: mykeyvaultname
-        scrprovclass:
           tenantId: mytenantid
 syncPolicy:
     automated: {}
