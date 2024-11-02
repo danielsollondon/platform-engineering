@@ -26,8 +26,8 @@ spec:
         scrprovclass:
           keyVaultname: mykeyvaultname
           tenantId: mytenantid
-syncPolicy:
-    automated: {}
-destination:
-    namespace: app-name
-    server: https://kubernetes.default.svc
+  syncPolicy:
+      automated: {}
+  destination:
+      namespace: app-name
+      server: https://kubernetes.default.svc
