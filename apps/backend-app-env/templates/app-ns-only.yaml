@@ -34,6 +34,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend-secret-deploy
+  namespace: {{ .Values.namespace.name }}
   labels:
     app: backend-secret
 spec:
@@ -43,8 +44,6 @@ spec:
       app: backend-secret
   template:
     metadata:
-      name: busybox-secrets-store-inline-user-msi
-      namespace: {{ .Values.namespace.name }}
       labels:
         app: backend-secret
         azure.workload.identity/use: "true"     
