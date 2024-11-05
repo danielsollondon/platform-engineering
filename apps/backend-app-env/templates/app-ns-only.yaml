@@ -46,8 +46,8 @@ spec:
       name: busybox-secrets-store-inline-user-msi
       namespace: {{ .Values.namespace.name }}
       labels:
-        azure.workload.identity/use: "true"
         app: backend-secret
+        azure.workload.identity/use: "true"     
   spec:
     serviceAccountName: {{ .Values.namespace.name }}
     containers:
