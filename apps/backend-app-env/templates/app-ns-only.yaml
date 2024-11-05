@@ -4,8 +4,7 @@ metadata:
   name: pdb-default-test
 spec:
   minAvailable: 30%
-  selector:
-    ({})
+  selector: {}
 ---
 apiVersion: v1
 kind: ServiceAccount
