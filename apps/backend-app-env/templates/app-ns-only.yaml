@@ -30,13 +30,24 @@ spec:
     secretName: db-conn-string                    # name of the Kubernetes secret object
     type: Opaque                              # type of Kubernetes secret object (for example, Opaque, kubernetes.io/tls)
 ---
-kind: Pod
-apiVersion: v1
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: busybox-secrets-store-inline-user-msi
-  namespace: {{ .Values.namespace.name }}
+  name: backend-secret-deploy
   labels:
-    azure.workload.identity/use: "true"
+    app: backend-secret
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-secret
+template:
+  metadata:
+    name: busybox-secrets-store-inline-user-msi
+    namespace: {{ .Values.namespace.name }}
+    labels:
+      azure.workload.identity/use: "true"
+      app: backend-secret
 spec:
   serviceAccountName: {{ .Values.namespace.name }}
   containers:
