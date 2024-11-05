@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    azure.workload.identity/client-id: {{ .Values.serviceaccount.clientId }}
+  name: {{ .Values.namespace.name }}
+  namespace: {{ .Values.namespace.name }}
+---
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: spc-app-env-vars
+  namespace: {{ .Values.namespace.name }}
+spec:
+  provider: azure
+  parameters:
+    usePodIdentity: "false"
+    clientID: {{ .Values.serviceaccount.clientId }} # Setting this to use workload identity
+    keyvaultName: {{ .Values.scrprovclass.keyVaultname }}      # Set to the name of your key vault
+    objects:  |
+      array:
+        - |
+          objectName: db-conn-string  
+          objectType: secret
+    tenantId: {{ .Values.scrprovclass.tenantId }}                 # The tenant ID of the key vault                              
+  secretObjects:                              # [OPTIONAL] SecretObjects defines the desired state of synced Kubernetes secret objects
+  - data:
+    - key: db-conn-string                            # data field to populate
+      objectName: db-conn-string                          # name of the mounted content to sync; this could be the object name or the object alias
+    secretName: db-conn-string                    # name of the Kubernetes secret object
+    type: Opaque                              # type of Kubernetes secret object (for example, Opaque, kubernetes.io/tls)
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: busybox-secrets-store-inline-user-msi
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    azure.workload.identity/use: "true"
+spec:
+  serviceAccountName: {{ .Values.namespace.name }}
+  containers:
+    - name: busybox
+      image: k8s.gcr.io/e2e-test-images/busybox:1.29-1
+      command:
+        - "/bin/sleep"
+        - "10000"
+      volumeMounts:
+      - name: secrets-store01-inline
+        mountPath: "/mnt/secrets-store"
+        readOnly: true
+      env:
+      - name: db-conn-string
+        valueFrom:
+          secretKeyRef:
+            name: db-conn-string 
+            key: db-conn-string
+  volumes:
+    - name: secrets-store01-inline
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: spc-app-env-vars
+  

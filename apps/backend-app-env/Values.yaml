@@ -1,0 +1,12 @@
+namespace:
+  name: tobeoverwritten
+
+serviceaccount:
+  clientId: tobeoverwritten
+
+scrprovclass:
+  keyVaultname: tobeoverwritten
+  tenantId: tobeoverwritten
+
+
+
