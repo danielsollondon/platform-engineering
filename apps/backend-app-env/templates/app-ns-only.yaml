@@ -41,36 +41,36 @@ spec:
   selector:
     matchLabels:
       app: backend-secret
-template:
-  metadata:
-    name: busybox-secrets-store-inline-user-msi
-    namespace: {{ .Values.namespace.name }}
-    labels:
-      azure.workload.identity/use: "true"
-      app: backend-secret
-spec:
-  serviceAccountName: {{ .Values.namespace.name }}
-  containers:
-    - name: busybox
-      image: k8s.gcr.io/e2e-test-images/busybox:1.29-1
-      command:
-        - "/bin/sleep"
-        - "10000"
-      volumeMounts:
+  template:
+    metadata:
+      name: busybox-secrets-store-inline-user-msi
+      namespace: {{ .Values.namespace.name }}
+      labels:
+        azure.workload.identity/use: "true"
+        app: backend-secret
+  spec:
+    serviceAccountName: {{ .Values.namespace.name }}
+    containers:
+      - name: busybox
+        image: k8s.gcr.io/e2e-test-images/busybox:1.29-1
+        command:
+          - "/bin/sleep"
+          - "10000"
+        volumeMounts:
+        - name: secrets-store01-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+        env:
+        - name: db-conn-string
+          valueFrom:
+            secretKeyRef:
+              name: db-conn-string 
+              key: db-conn-string
+    volumes:
       - name: secrets-store01-inline
-        mountPath: "/mnt/secrets-store"
-        readOnly: true
-      env:
-      - name: db-conn-string
-        valueFrom:
-          secretKeyRef:
-            name: db-conn-string 
-            key: db-conn-string
-  volumes:
-    - name: secrets-store01-inline
-      csi:
-        driver: secrets-store.csi.k8s.io
-        readOnly: true
-        volumeAttributes:
-          secretProviderClass: spc-app-env-vars
-  
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: spc-app-env-vars
+    
