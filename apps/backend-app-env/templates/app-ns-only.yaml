@@ -15,7 +15,7 @@ metadata:
   name: pdb-default-test
 spec:
   minAvailable: 30%
-  selector: {}
+  selector: {} #branch test
 ---
 apiVersion: v1
 kind: ServiceAccount
