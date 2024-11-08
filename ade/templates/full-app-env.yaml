@@ -1,0 +1,48 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: app-name
+  labels:
+    team: teamname
+    az-rgroup: resource-group
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: small-quota
+  namespace: app-name
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: 1Gi
+    limits.cpu: "4"
+    limits.memory: 2Gi
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: pdb-default-small
+  namespace: app-name
+spec:
+  minAvailable: 30%
+  selector: {} #branch test
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-name
+  namespace: argocd
+spec:
+  project: default
+  source:    
+    repoURL: <helm chart location, app repo> 
+    targetRevision: branch
+    path: repopath
+    helm:
+      valueFiles:
+        - values-production.yaml << in the app repo: danielsollondon/projects/enviroments
+  syncPolicy:
+      automated: {}
+  destination:
+      namespace: app-name
+      server: https://kubernetes.default.svc
