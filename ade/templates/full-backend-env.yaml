@@ -15,7 +15,7 @@ spec:
   project: default
   source:    
     repoURL: repourl
-    targetRevision: HEAD
+    targetRevision: branch
     path: repopath
     helm:
       valuesObject:
