@@ -40,7 +40,7 @@ spec:
     path: repopath
     helm:
       valueFiles:
-        - values-production.yaml << in the app repo: danielsollondon/projects/enviroments
+        - values-production.yaml << in the app repo: e.g. danielsollondon/projects/enviroments
   syncPolicy:
       automated: {}
   destination:
