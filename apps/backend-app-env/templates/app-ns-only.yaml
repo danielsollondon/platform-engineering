@@ -70,7 +70,7 @@ spec:
       serviceAccountName: {{ .Values.namespace.name }}
       containers:
         - name: busybox
-          image: k8s.gcr.io/e2e-test-images/busybox:1.29-1
+          image: acrdansol24.azurecr.io/busybox:1.29-1
           resources:
             limits:
               memory: "500Mi"
