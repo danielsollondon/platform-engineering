@@ -17,7 +17,7 @@ spec:
   source:
     repoURL: https://github.com/danielsollondon/projects
     targetRevision: HEAD
-    path: ./environments
+    path: ./environments/dev01
   destination:
     server: https://kubernetes.default.svc
     namespace: cluster-config
