@@ -35,7 +35,7 @@ metadata:
 spec:
   project: default
   source:    
-    repoURL: repopath 
+    repoURL: repourl 
     targetRevision: branch
     path: repopath
     helm:
