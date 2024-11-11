@@ -15,8 +15,8 @@ spec:
   hard:
     requests.cpu: "2"
     requests.memory: 1Gi
-    limits.cpu: "4"
-    limits.memory: 2Gi
+    limits.cpu: "10"
+    limits.memory: 8Gi
 ---
 apiVersion: policy/v1
 kind: PodDisruptionBudget
@@ -40,7 +40,7 @@ spec:
     path: repopath
     helm:
       valueFiles:
-        - values-production.yaml << in the app repo: e.g. danielsollondon/projects/enviroments
+        - custom-values.yaml
   syncPolicy:
       automated: {}
   destination:
