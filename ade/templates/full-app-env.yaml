@@ -30,19 +30,24 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-name
+  name: appname
   namespace: argocd
 spec:
   project: default
-  source:    
-    repoURL: repourl 
-    targetRevision: branch
-    path: repopath
-    helm:
-      valueFiles:
-        - custom-values.yaml
+  sources:   
+    - chart:  
+      repoURL: https://github.com/jacksonkays/aks-store-demo 
+      targetRevision: main
+      path: charts/aks-store-demo
+      helm:
+        valueFiles:
+        - $values/environments/shared-cluster-01/appname/custom-values.yaml
+    - repoURL: https://github.com/danielsollondon/projects
+      targetRevision: main
+      ref: values
   syncPolicy:
       automated: {}
+      prune: true
   destination:
-      namespace: app-name
+      namespace: appname
       server: https://kubernetes.default.svc

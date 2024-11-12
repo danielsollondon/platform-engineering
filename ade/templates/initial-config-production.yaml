@@ -17,7 +17,9 @@ spec:
   source:
     repoURL: https://github.com/danielsollondon/projects
     targetRevision: HEAD
-    path: ./environments/production01
+    path: ./environments/shared-cluster-01
+    directory:
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
     namespace: cluster-config
