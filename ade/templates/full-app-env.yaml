@@ -30,7 +30,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: appname
+  name: app-name
   namespace: argocd
 spec:
   project: default
@@ -41,7 +41,7 @@ spec:
       path: charts/aks-store-demo
       helm:
         valueFiles:
-        - $values/environments/shared-cluster-01/appname/custom-values.yaml
+        - $values/environments/shared-cluster-01/deployment-name/custom-values.yaml
     - repoURL: https://github.com/danielsollondon/projects
       targetRevision: main
       ref: values
@@ -49,5 +49,5 @@ spec:
       automated: {}
       prune: true
   destination:
-      namespace: appname
+      namespace: app-name
       server: https://kubernetes.default.svc
