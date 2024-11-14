@@ -15,9 +15,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/danielsollondon/projects
+    repoURL: https://github.com/danielsollondon/platform-engineering/
     targetRevision: HEAD
-    path: ./environments/aiml-dev02
+    path: ./apps/aiml-tuning/phi2
     directory:
       recurse: true
   destination:
