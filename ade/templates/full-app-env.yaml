@@ -37,7 +37,7 @@ spec:
   sources:   
     - chart:  
       repoURL: https://github.com/jacksonkays/aks-store-demo 
-      targetRevision: main
+      targetRevision: branch
       path: charts/aks-store-demo
       helm:
         valueFiles:
