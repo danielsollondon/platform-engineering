@@ -1,0 +1,28 @@
+name: Backend-Data-Tier-Dev-Small-FIPS
+summary: Dev AKS Staging spec - with access to K8S deployed to FIPS compliant 
+description: Creates a backend data tier with access to K8s (only for adv debug)
+runner: <Azure Container Registry>/Repo:latest
+templatePath: main.tf
+parameters:
+  - id: "name"
+    name: "Name"
+    required: true
+    type: "string"
+  - id: "teamname"
+    name: "Team Name"
+    required: true
+    type: "string"
+  - id: "repourl"
+    name: "Repo URL"
+    required: true
+    type: "string"
+  - id: "repopath"
+    name: "Repo Path"
+    required: true
+    type: "string"
+  - id: "branch"
+    name: "Branch"
+    required: true
+    type: "string"
+
+    
