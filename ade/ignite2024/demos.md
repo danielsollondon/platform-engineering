@@ -2,7 +2,7 @@
 > Note!
 The code here is NOT best practice, neither production quality, it is for illustration and should be reviewed with security and subject matter experts prior to deployment and not be deployed into production systems. The author does not accept any liability for using it.
 
-* [ADE Runner example](https://github.com/danielsollondon/ade-extensibility-model-terraform)
+* [ADE Runner example](https://github.com/Azure/ade-extensibility-model-terraform)
 * [ADE Catalog Item for Cloud Native FIP(inc TF)](./environments/) 
 * [Cloud Native Template](./scripts/full-backend-env-fips.yaml) 
 * [AKS Cloud Native PE Samples](https://github.com/Azure-Samples/aks-platform-engineering)
