@@ -3,9 +3,10 @@
 The code here is NOT best practice, neither production quality, it is for illustration and should be reviewed with security and subject matter experts prior to deployment and not be deployed into production systems. The author does not accept any liability for using it.
 
 
-
 * [ADE Runner example](https://github.com/Azure/ade-extensibility-model-terraform)
 * [ADE Catalog Item for Cloud Native FIP(inc TF)](./environments/) 
+* [Getting Started with ADE](aka.ms/ade/getstarted)
+* [ADE Extensibility Model](https://learn.microsoft.com/en-us/azure/deployment-environments/how-to-configure-extensibility-model-custom-image?tabs=sample%2Cprivate-registry&pivots=arm-bicep)
 * [Cloud Native Template](./scripts/full-backend-env-fips.yaml) 
 * [AKS Cloud Native PE Samples](https://github.com/Azure-Samples/aks-platform-engineering)
 * [Headlamp in Backstage](https://headlamp.dev/blog/2024/11/11/introducing-an-integrated-backstage-and-headlamp-experience)
@@ -24,3 +25,9 @@ The code here is NOT best practice, neither production quality, it is for illust
 * [AKS AAD Enabled RBAC](https://learn.microsoft.com/en-us/azure/aks/azure-ad-rbac?tabs=portal)
 * [AKS Automatic Clusters (provides many of the features above already configured)](https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-automatic-deploy?pivots=azure-portal)
 
+# More information links
+[Policy as code](aka.ms/policyAsCodeSample)
+[Azure Policy](aka.ms/azurepolicy)
+[GitHub Advanced Security](aka.ms/ghas)
+[Defender for Cloud](aka.ms/defenderforcloud)
+[Azure Deployment Environments(ADE) Blog](aka.ms/ignite24/ade-blog)
