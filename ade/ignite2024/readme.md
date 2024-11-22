@@ -8,9 +8,6 @@ The code here is NOT best practice, neither production quality, it is for illust
 * [Getting Started with ADE](aka.ms/ade/getstarted)
 * [ADE Extensibility Model](https://learn.microsoft.com/en-us/azure/deployment-environments/how-to-configure-extensibility-model-custom-image?tabs=sample%2Cprivate-registry&pivots=arm-bicep)
 * [Cloud Native Template](./scripts/full-backend-env-fips.yaml) 
-* [AKS Cloud Native PE Samples](https://github.com/Azure-Samples/aks-platform-engineering)
-* [Headlamp in Backstage](https://headlamp.dev/blog/2024/11/11/introducing-an-integrated-backstage-and-headlamp-experience)
-* [Crossplane + Argo on Azure Deep Dive](https://github.com/danielsollondon/platform-engineering/tree/main)
 * [Argo](https://argo-cd.readthedocs.io/en/stable/)
 
 # AKS Features used
@@ -25,9 +22,14 @@ The code here is NOT best practice, neither production quality, it is for illust
 * [AKS AAD Enabled RBAC](https://learn.microsoft.com/en-us/azure/aks/azure-ad-rbac?tabs=portal)
 * [AKS Automatic Clusters (provides many of the features above already configured)](https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-automatic-deploy?pivots=azure-portal)
 
+# Cloud Native Samples
+* [AKS Cloud Native PE Samples (build a PE environment based GitOps and AKS, Backstage example)](https://github.com/Azure-Samples/aks-platform-engineering)
+* [View K8s clusters with Headlamp in Backstage](https://headlamp.dev/blog/2024/11/11/introducing-an-integrated-backstage-and-headlamp-experience)
+* [Crossplane + Argo on Azure Deep Dive](https://github.com/danielsollondon/platform-engineering/tree/main)
+
 # More information links
-[Policy as code](aka.ms/policyAsCodeSample)
-[Azure Policy](aka.ms/azurepolicy)
-[GitHub Advanced Security](aka.ms/ghas)
-[Defender for Cloud](aka.ms/defenderforcloud)
-[Azure Deployment Environments(ADE) Blog](aka.ms/ignite24/ade-blog)
+* [Policy as code](aka.ms/policyAsCodeSample)
+* [Azure Policy](aka.ms/azurepolicy)
+* [GitHub Advanced Security](aka.ms/ghas)
+* [Defender for Cloud](aka.ms/defenderforcloud)
+* [Azure Deployment Environments(ADE) Blog](aka.ms/ignite24/ade-blog)
