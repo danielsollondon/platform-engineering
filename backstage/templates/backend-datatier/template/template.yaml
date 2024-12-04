@@ -45,7 +45,7 @@ spec:
           ui:autofocus: true
           ui:options:
             rows: 5
-  - title: Branch Name
+    - title: Branch Name
       required:
         - branchName
       properties:
