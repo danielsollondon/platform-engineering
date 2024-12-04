@@ -19,23 +19,23 @@ spec:
   system: backend-datatier
   providesApis: [backend-datatier-grpc-api]
 ---
-# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-api
-apiVersion: backstage.io/v1alpha1
-kind: API
-metadata:
-  name: backend-datatier-grpc-api
-spec:
-  type: grpc
-  lifecycle: experimental
-  owner: guests
-  system: backend-datatier
-  definition: |
-    syntax = "proto3";
+# # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-api
+# apiVersion: backstage.io/v1alpha1
+# kind: API
+# metadata:
+#   name: backend-datatier-grpc-api
+# spec:
+#   type: grpc
+#   lifecycle: experimental
+#   owner: guests
+#   system: backend-datatier
+#   definition: |
+#     syntax = "proto3";
 
-    service Exampler {
-      rpc Example (ExampleMessage) returns (ExampleMessage) {};
-    }
+#     service Exampler {
+#       rpc Example (ExampleMessage) returns (ExampleMessage) {};
+#     }
 
-    message ExampleMessage {
-      string example = 1;
-    };
+#     message ExampleMessage {
+#       string example = 1;
+#     };
