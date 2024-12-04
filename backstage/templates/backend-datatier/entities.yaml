@@ -3,7 +3,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
-  name: examples
+  name: backend-datatier
 spec:
   owner: guests
 ---
@@ -11,24 +11,24 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: example-website
+  name: backend-datatier
 spec:
   type: website
   lifecycle: experimental
   owner: guests
-  system: examples
-  providesApis: [example-grpc-api]
+  system: backend-datatier
+  providesApis: [backend-datatier-grpc-api]
 ---
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-api
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: example-grpc-api
+  name: backend-datatier-grpc-api
 spec:
   type: grpc
   lifecycle: experimental
   owner: guests
-  system: examples
+  system: backend-datatier
   definition: |
     syntax = "proto3";
 
