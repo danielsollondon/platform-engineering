@@ -1,0 +1,9 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: ${{ values.name }}
+  labels:
+    team: teamname
+    az-rgroup: resource-group
+  annotations:
+    scheduler.alpha.kubernetes.io/node-selector: kubernetes.azure.com/fips_enabled=true
