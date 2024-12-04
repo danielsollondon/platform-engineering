@@ -56,7 +56,7 @@ spec:
           ui:autofocus: true
           ui:options:
             rows: 5
-  - title: Enter your team name
+    - title: Enter your team name
       required:
         - teamName
       properties:
