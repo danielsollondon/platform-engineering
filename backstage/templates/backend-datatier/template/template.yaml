@@ -87,7 +87,8 @@ spec:
       input:
         allowedHosts: ['github.com']
         description: This is ${{ parameters.name }}
-        repoUrl: ${{ parameters.repoUrl }}
+    #    repoUrl: ${{ parameters.repoUrl }}
+         repoUrl: github.com?repo=platform-engineering&owner=danielsollondon
 
     # The final step is to register our new component in the catalog.
     - id: register
