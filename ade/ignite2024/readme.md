@@ -27,6 +27,15 @@ The code here is NOT best practice, neither production quality, it is for illust
 * [View K8s clusters with Headlamp in Backstage](https://headlamp.dev/blog/2024/11/11/introducing-an-integrated-backstage-and-headlamp-experience)
 * [Crossplane + Argo on Azure Deep Dive](https://github.com/danielsollondon/platform-engineering/tree/main)
 
+# Recorded Sessions
+* [Enabling standardization, compliance and security in a platform](https://www.youtube.com/watch?v=qDIQHzjqlqQ)
+    * Focus tech: Azure Security, Argo, Azure Policy (Policy as Code)
+* [Enabling self service resource standardization](https://www.youtube.com/watch?v=mGq442iwAF0)
+    * Focus Tech: Crossplane Composite Resources & Argo + TF Modules and GitHub Actions
+* [Enabling self service of full developer environments with AKS multi-tenency & self service](https://www.youtube.com/watch?v=YvBPcY013i4)
+    * Focus Tech: Argo, Terraform, Azure Deployment environments, Grafana, Log Analytics.
+
+
 # More information links
 * [Policy as code](aka.ms/policyAsCodeSample)
 * [Azure Policy](aka.ms/azurepolicy)
