@@ -6,7 +6,6 @@ metadata:
     app.kubernetes.io/name: contoso-air-base
     kubernetes.azure.com/generator: devhub
     azure.workload.identity/use: 'true'
-  namespace: contosoair01
 spec:
   replicas: 1
   selector:
