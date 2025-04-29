@@ -29,6 +29,8 @@ spec:
         azure.workload.identity/use: "true"
     spec:
       serviceAccountName: ${NAMESPACE}-sa
+      imagePullSecrets:
+        - name: acr-repo-sec01
       containers:
         - name: contoso-air-base
           image: 
@@ -97,8 +99,7 @@ spec:
                 - ALL
             seccompProfile:
               type: RuntimeDefault
-      imagePullSecrets:
-        - name: acr-repo-sec01
+
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
