@@ -40,7 +40,7 @@ spec:
                 name: secret-ref
                 optional: true
             - secretRef:
-                name: sc-cosmosef880-secret
+                name: app-secrets
           resources:
             limits:
               cpu: '1'
