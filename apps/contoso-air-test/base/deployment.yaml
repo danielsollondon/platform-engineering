@@ -1,7 +1,16 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    azure.workload.identity/client-id: ${USER_ASSIGNED_CLIENT_ID}
+  name: ${NAMESPACE}-sa
+  namespace: ${NAMESPACE}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: contoso-air-base
+  namespace: ${NAMESPACE}
   labels:
     app.kubernetes.io/name: contoso-air-base
     kubernetes.azure.com/generator: devhub
@@ -106,4 +115,4 @@ spec:
           labelSelector:
             matchLabels:
               app.kubernetes.io/name: contoso-air-base
-      serviceAccountName: sc-account-3fe04196-cd74-4d48-bd1b-8004a8bc73b4
+      serviceAccountName: ${NAMESPACE}-sa

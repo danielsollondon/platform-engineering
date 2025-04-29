@@ -5,3 +5,8 @@ metadata:
   labels:
     app.kubernetes.io/name: contoso-air-base
     kubernetes.azure.com/generator: devhub
+data:
+  ca.crt: |
+    -----BEGIN CERTIFICATE-----
+
+    -----END CERTIFICATE-----

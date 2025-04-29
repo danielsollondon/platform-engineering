@@ -8,9 +8,5 @@ kind: ServiceAccount
 metadata:
   annotations:
     azure.workload.identity/client-id: ${AZURE_COSMOS_CLIENTID}
-    azure.workload/connlisturl: https://management.azure.com/subscriptions/${AZURE_COSMOS_LISTCONNECTIONSTRINGURL}/listConnectionStrings?api-version=2024-11-15
-    azure.workload/resourceendpoint: ${AZURE_COSMOS_RESOURCEENDPOINT}
-    azure.workload/resourceendpoint2: ${AZURE_COSMOS_RESOURCEENDPOINT2}
-    azure.workload/scope: ${AZURE_COSMOS_SCOPE}
-  name: contosoair01-sa
+  name: ${NAMESPACE}-sa
   namespace: ${NAMESPACE}
