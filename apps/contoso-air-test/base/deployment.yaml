@@ -99,7 +99,6 @@ spec:
               type: RuntimeDefault
       imagePullSecrets:
         - name: acr-repo-sec01
-        - namespace: default
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
