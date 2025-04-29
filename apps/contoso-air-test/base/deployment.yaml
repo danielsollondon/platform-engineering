@@ -14,7 +14,6 @@ metadata:
   labels:
     app.kubernetes.io/name: contoso-air-base
     kubernetes.azure.com/generator: devhub
-    azure.workload.identity/use: 'true'
 spec:
   replicas: 1
   selector:
@@ -26,6 +25,7 @@ spec:
         app.kubernetes.io/name: contoso-air-base
         azure.workload.identity/use: "true"
     spec:
+      serviceAccountName: ${NAMESPACE}-sa
       containers:
         - name: contoso-air-base
           image: 
@@ -118,4 +118,4 @@ spec:
           labelSelector:
             matchLabels:
               app.kubernetes.io/name: contoso-air-base
-      serviceAccountName: ${NAMESPACE}-sa
+      
