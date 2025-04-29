@@ -3,6 +3,8 @@ kind: ServiceAccount
 metadata:
   annotations:
     azure.workload.identity/client-id: ${USER_ASSIGNED_CLIENT_ID}
+  labels:
+    azure.workload.identity/use: "true"
   name: ${NAMESPACE}-sa
   namespace: ${NAMESPACE}
 ---
