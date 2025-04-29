@@ -2,3 +2,11 @@ kind: Namespace
 apiVersion: v1
 metadata:
   name: ${NAMESPACE}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    azure.workload.identity/client-id: ${USER_ASSIGNED_CLIENT_ID}
+  name: contosoair01-sa
+  namespace: ${NAMESPACE}
