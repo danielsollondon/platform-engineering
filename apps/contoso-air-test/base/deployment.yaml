@@ -30,8 +30,6 @@ spec:
         - name: contoso-air-base
           image: 
             gmay25clu2registry.azurecr.io/image-workflow-1745776707818:892f050fd396da0f7ea56dd899788f7d1b177833
-      imagePullSecrets:
-        - name: acr-repo-sec01
           ports:
             - containerPort: 3000
               protocol: TCP
@@ -96,6 +94,8 @@ spec:
                 - ALL
             seccompProfile:
               type: RuntimeDefault
+      imagePullSecrets:
+        - name: acr-repo-sec01
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
